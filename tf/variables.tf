@@ -12,7 +12,6 @@ variable "worker_node_size" {
   default = "s-2vcpu-4gb"
 }
 
-# Kubernetes master nodes are also 'tier=filter' nodes
 variable "master_node_count" {
   default     = 3
   description = "Number master nodes in the cluster"
