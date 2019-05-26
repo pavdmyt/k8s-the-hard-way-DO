@@ -37,3 +37,30 @@ resource "digitalocean_droplet" "worker_node" {
     timeout     = "2m"
   }
 }
+
+resource "digitalocean_loadbalancer" "k8s_lb" {
+  name        = "k8s-test-lb"
+  region      = "${var.region}"
+  droplet_ids = ["${digitalocean_droplet.master_node.*.id}"]
+
+  forwarding_rule {
+    entry_port     = 6443
+    entry_protocol = "tcp"
+
+    target_port     = 6443
+    target_protocol = "tcp"
+  }
+
+  forwarding_rule {
+    entry_port     = 22
+    entry_protocol = "tcp"
+
+    target_port     = 22
+    target_protocol = "tcp"
+  }
+
+  healthcheck {
+    port     = 22
+    protocol = "tcp"
+  }
+}
