@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Master nodes
+USER="root"
+INST_PREFIX="k8s-test-dev-master-node-pavdmyt-"
+
 for inst_num in 1 2 3; do
   scp ca.pem \
     ca-key.pem \
@@ -8,5 +10,5 @@ for inst_num in 1 2 3; do
     kubernetes.pem \
     service-account-key.pem \
     service-account.pem \
-    root@k8s-test-dev-master-node-pavdmyt-${inst_num}:~/
+    ${USER}@${INST_PREFIX}${inst_num}:~/
 done
