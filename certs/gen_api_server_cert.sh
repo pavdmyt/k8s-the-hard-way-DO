@@ -1,13 +1,18 @@
 #!/bin/bash
 
-KUBERNETES_PUBLIC_ADDRESS=""
+KUBERNETES_PUBLIC_ADDRESS=${LB_IP:-""}
 if [ -z $KUBERNETES_PUBLIC_ADDRESS ]; then
   echo "Error: KUBERNETES_PUBLIC_ADDRESS is not set"
   exit 1
 fi
 
-USER="root"
 INST_PREFIX="k8s-test-dev-master-node-pavdmyt-"
+# Cleanup
+ssh-keygen -R ${INST_PREFIX}1
+ssh-keygen -R ${INST_PREFIX}2
+ssh-keygen -R ${INST_PREFIX}3
+
+USER="root"
 INTERNAL_IP_MASTER1=$(ssh ${USER}@${INST_PREFIX}1 hostname -I | cut -d " " -f3)
 INTERNAL_IP_MASTER2=$(ssh ${USER}@${INST_PREFIX}2 hostname -I | cut -d " " -f3)
 INTERNAL_IP_MASTER3=$(ssh ${USER}@${INST_PREFIX}3 hostname -I | cut -d " " -f3)
