@@ -24,6 +24,9 @@ cat > ${INST_PREFIX}${inst_num}-csr.json <<EOF
 }
 EOF
 
+# Cleanup
+ssh-keygen -R ${INST_PREFIX}${inst_num}
+
 EXTERNAL_IP=$(ssh ${USER}@${INST_PREFIX}${inst_num} hostname -I \
   | cut -d " " -f1)
 
